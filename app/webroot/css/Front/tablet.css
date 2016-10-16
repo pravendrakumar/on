@@ -1,0 +1,57 @@
+@media only screen and (max-width:1233px) {
+.serachCon{ max-width:500px;}
+/*.shareBx{ padding-right:70px;}*/
+.shareBx img{width:80%;}
+.shareBx a{margin-left:0px;}
+}
+
+@media only screen and (max-width:1023px) {
+.serachCon{ max-width:350px;}
+.topTab{ text-align:left;}
+.tab ul li:first-child a{ padding-left:0;}
+.btnBuy{ width:200px;}
+.logo{ margin-top:0;}
+.serachCon{ margin-left:20px; max-width:300px;}
+}
+
+@media only screen and (min-width:768px){.navLeft{ display:block !important;}}
+@media only screen and (max-width:767px){
+.header{ height:50px;}
+.logo{ padding:8px 0;}
+.logo img{ width:140px;}
+.serachCon{ display:none;}
+.signIn{ margin-top:12px;}
+.wishList span:first-child{ display:none;}
+.wishList{ width:auto; right:0; height:34px; font-size:13px;}
+.tab ul li a {padding: 7px;font-size: 13px;}
+.topTab{ height:34px; top:50px;}
+.wishList span{ margin:7px 10px;}
+.midCon{ padding-top:100px;}
+.midCon .container{ padding-left:10px;}
+.leftNav{ position:relative; margin-bottom:20px; width:100%; left:0;}
+.rightCon{ text-align:center;}
+.footNav a{ font-size:14px; margin:0 7px;}
+.toggle{ cursor:pointer;}
+.navLeft{ display:none;}
+.rightCon ul li{ margin:10px;}
+.copyRight{ font-size:12px;}
+.close{ width: 30px;}
+.addWishList{ display: block; margin: 15px 0 0;}
+.signUp{ font-size:13px; padding:4px;}
+.signIn a{ margin-left:0;}
+@media screen and (min-width:320px){
+	.signUp{ font-size:8px; padding:3px;}
+	.signIn a img{width:27px; margin-top:1px;}
+}
+.mail{ width:35px;}
+}
+
+@media only screen and (max-width:639px){
+
+.prodectimage{ width: 100%; float: none; margin-bottom: 30px;}
+.productdetails{ width: 100%; float: none;}
+
+}
+@media only screen and (max-width:479px){
+.topTab ul li:last-child{ display:none;}	
+}

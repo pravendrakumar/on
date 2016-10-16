@@ -1,0 +1,4 @@
+[23-Jun-2016 13:30:25 CST6CDT] PHP Fatal error:  Class 'AppHelper' not found in /home/trendtai/public_html/lib/Cake/View/Helper/HtmlHelper.php on line 32
+[23-Jun-2016 13:41:03 CST6CDT] PHP Deprecated:  Function set_magic_quotes_runtime() is deprecated in /home/trendtai/public_html/app/webroot/SQLyogTunnel.php on line 1518
+[23-Jun-2016 13:42:48 CST6CDT] PHP Deprecated:  Function set_magic_quotes_runtime() is deprecated in /home/trendtai/public_html/app/webroot/SQLyogTunnel.php on line 1518
+[23-Jun-2016 13:42:49 CST6CDT] PHP Deprecated:  Function set_magic_quotes_runtime() is deprecated in /home/trendtai/public_html/app/webroot/SQLyogTunnel.php on line 1518
