@@ -291,7 +291,7 @@ class AdminsController extends AppController{
 	}
 		
 
-/*******************Fire Station function ends here*****************************/
+/*************Fire Station function ends here**********************/ 
 
 /******************Emergencey vehicle section******************************/
 
@@ -404,7 +404,113 @@ class AdminsController extends AppController{
 
 /******************Call Log section ends here********************************/
 	
-/*--------------- SETTING SECTION START SECTION END  ---------------------------*/
+
+/****************Event management start here******************/
+  public function admin_manage_events(){
+	  Controller::loadModel('Event');
+		$cond = array();
+	    $this->paginate = array('conditions'=>$cond,'limit'=>PAGINATION, 'order'=>array('Event.id'=>'DESC'));
+
+		$this->set('eventListing', $this->paginate('Event'));
+	}
+	public function admin_add_event() {
+		Controller::loadModel('Event');
+		Controller::loadModel('User');
+		$this->User->virtualFields = array(
+		    'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+		);		
+		$users=$this->User->find('all',array('fields'=>array('id','name')));
+        
+        $this->set('userData',$users);
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Event']['participant']=implode(',', $saveData['Event']['participant']);
+
+			if($this->Event->save($saveData['Event'])){
+				$this->Session->setFlash('Event Added Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_events/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+	}
+
+
+	public function admin_edit_event($id){
+		Controller::loadModel('Event');
+		Controller::loadModel('User');
+		$this->User->virtualFields = array(
+		    'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+		);		
+		$users=$this->User->find('all',array('fields'=>array('id','name')));
+        
+        $this->set('userData',$users);
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Event']['participant']=implode(',', $saveData['Event']['participant']);
+			if($this->Event->save($saveData['Event'])){
+				$this->Session->setFlash('Event Updated Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_events/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+		$eventArr = $this->Event->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_events/');
+	}
+
+
+    public function admin_event_preview($id){
+	Controller::loadModel('Event');
+    Controller::loadModel('User');
+    $eventArr = $this->Event->findById($id);
+	$this->User->virtualFields = array(
+	'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+	);		
+	$users=$this->User->find('all',array(
+		'fields'=>array('name'),
+		'conditions'=>array(
+			'User.id'=>explode(',', $eventArr['Event']['participant'])
+		 )
+		)
+	);
+	
+	$userArr=array();
+	if(!empty($users)){
+	foreach ($users as $key => $user) {
+		$userArr[$key]=$user['User']['name'];
+
+	}
+	$eventArr['Event']['users']=implode(',', $userArr);
+   }
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_events/');
+	}
+		
+
+	public function admin_delete_event($id){
+		Controller::loadModel('Event');
+		if($id != ''){
+			$eventDetailsArr = $this->Event->findById($id);
+			if(!empty($eventDetailsArr)){ //pr($productDetailsArr);die;
+				
+				if($this->Event->delete($id))
+					$this->Session->setFlash('Event Deleted Successfully!!', 'message', array('class'=>'msg_success'));
+				else
+					$this->Session->setFlash('Please Try Later!!', 'message', array('class'=>'msg_error'));
+			}else
+				$this->Session->setFlash('No Associated Product Found!!', 'message', array('class'=>'msg_error'));
+		}
+		$this->redirect('/admin/admins/manage_events/');
+	}	
+/****************Event management ends here******************/
+
+/*------------- SETTING SECTION START SECTION END  ---------------------------*/
   
   
   public function admin_user(){
