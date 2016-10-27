@@ -13,7 +13,11 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- jvectormap -->
-  <?php echo $this->Html->css('/plugins/jvectormap/jquery-jvectormap-1.2.2'); ?>
+  <?php 
+echo $this->Html->css('/plugins/jvectormap/jquery-jvectormap-1.2.2');
+echo $this->Html->css('/css/Admin/jquery-ui');
+echo $this->Html->css('/css/Admin/jquery.timepicker.min');
+   ?>
   <!-- Theme style -->
   <?php echo $this->Html->css('/dist/css/AdminLTE.min'); ?>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -312,8 +316,9 @@
 
 <!-- jQuery 2.2.3 -->
 <?php echo $this->Html->script(array('/plugins/jQuery/jquery-2.2.3.min',
+  '/js/jquery-ui','jquery.timepicker.min',
                                      '/bootstrap/js/bootstrap.min.js',
-                                     '/plugins/fastclick/fastclick.js',
+                                     '/plugins/fastclick/fastclick.js','event',
                                      '/dist/js/app.min.js',
                                      '/plugins/sparkline/jquery.sparkline.min',
                                      '/plugins/jvectormap/jquery-jvectormap-1.2.2.min',
@@ -323,6 +328,5 @@
                                      '/dist/js/pages/dashboard2.js',
                                      '/dist/js/demo.js'
                                       ));?>
-
 </body>
 </html>
