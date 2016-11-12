@@ -510,6 +510,431 @@ class AdminsController extends AppController{
 	}	
 /****************Event management ends here******************/
 
+
+
+/****************Appratus management start here******************/
+  public function admin_manage_appratus(){
+	    Controller::loadModel('Appratus');
+		$cond = array();
+	    $this->paginate = array('conditions'=>$cond,'limit'=>PAGINATION, 'order'=>array('Appratus.id'=>'DESC'));
+
+		$this->set('appratusListing', $this->paginate('Appratus'));
+	}
+
+   public function admin_add_appratus() {
+		Controller::loadModel('Appratus');
+		Controller::loadModel('Group');
+		Controller::loadModel('Station');
+			
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
+		$groups=$this->Group->find('list',array('fields'=>array('id','name')));
+        $this->set('groups',$groups);
+
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Appratus']['group_id']=implode(',', $saveData['Appratus']['group_id']);
+
+			if($this->Appratus->save($saveData['Appratus'])){
+				$this->Session->setFlash('Appratus Added Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_appratus/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+	}
+
+
+	public function admin_edit_appratus($id){
+		Controller::loadModel('Appratus');
+		Controller::loadModel('Group');
+		Controller::loadModel('Station');
+			
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
+		$groups=$this->Group->find('list',array('fields'=>array('id','name')));
+        $this->set('groups',$groups);
+
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Appratus']['group_id']=implode(',', $saveData['Appratus']['group_id']);
+			if($this->Appratus->save($saveData['Appratus'])){
+				$this->Session->setFlash('Appratus Updated Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_appratus/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+		$eventArr = $this->Appratus->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_events/');
+	}
+
+
+    public function admin_appratus_preview($id){
+	Controller::loadModel('Appratus');
+    $eventArr = $this->Appratus->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_appratus/');
+	}
+		
+
+	public function admin_delete_appratus($id){
+		Controller::loadModel('Appratus');
+		if($id != ''){
+			$eventDetailsArr = $this->Appratus->findById($id);
+			if(!empty($eventDetailsArr)){ //pr($productDetailsArr);die;
+				
+				if($this->Appratus->delete($id))
+					$this->Session->setFlash('Appratus Deleted Successfully!!', 'message', array('class'=>'msg_success'));
+				else
+					$this->Session->setFlash('Please Try Later!!', 'message', array('class'=>'msg_error'));
+			}else
+				$this->Session->setFlash('No Associated Product Found!!', 'message', array('class'=>'msg_error'));
+		}
+		$this->redirect('/admin/admins/manage_appratus/');
+	}	
+/****************Appratus management ends here******************/
+
+/****************Group management start here******************/
+  public function admin_manage_groups(){
+	    Controller::loadModel('Appratus');
+		$cond = array();
+	    $this->paginate = array('conditions'=>$cond,'limit'=>PAGINATION, 'order'=>array('Appratus.id'=>'DESC'));
+
+		$this->set('appratusListing', $this->paginate('Appratus'));
+	}
+
+   public function admin_add_group() {
+		Controller::loadModel('User');
+		Controller::loadModel('Group');
+		Controller::loadModel('Station');
+			
+		$this->User->virtualFields = array(
+		'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+		);
+       
+        $users=$this->User->find('list',array('fields'=>array('id','name')));
+        $this->set('users',$users);
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Appratus']['group_id']=implode(',', $saveData['Appratus']['group_id']);
+
+			if($this->Appratus->save($saveData['Appratus'])){
+				$this->Session->setFlash('Appratus Added Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_appratus/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+	}
+
+
+	public function admin_edit_group($id){
+		Controller::loadModel('Appratus');
+		Controller::loadModel('Group');
+		Controller::loadModel('Station');
+			
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
+		$groups=$this->Group->find('list',array('fields'=>array('id','name')));
+        $this->set('groups',$groups);
+
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			$saveData['Appratus']['group_id']=implode(',', $saveData['Appratus']['group_id']);
+			if($this->Appratus->save($saveData['Appratus'])){
+				$this->Session->setFlash('Appratus Updated Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_appratus/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+		$eventArr = $this->Appratus->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_events/');
+	}
+
+
+    public function admin_group_preview($id){
+	Controller::loadModel('Appratus');
+    $eventArr = $this->Appratus->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else
+			$this->redirect('/admin/admins/manage_appratus/');
+	}
+		
+
+	public function admin_delete_group($id){
+		Controller::loadModel('Appratus');
+		if($id != ''){
+			$eventDetailsArr = $this->Appratus->findById($id);
+			if(!empty($eventDetailsArr)){ //pr($productDetailsArr);die;
+				
+				if($this->Appratus->delete($id))
+					$this->Session->setFlash('Appratus Deleted Successfully!!', 'message', array('class'=>'msg_success'));
+				else
+					$this->Session->setFlash('Please Try Later!!', 'message', array('class'=>'msg_error'));
+			}else
+				$this->Session->setFlash('No Associated Product Found!!', 'message', array('class'=>'msg_error'));
+		}
+		$this->redirect('/admin/admins/manage_appratus/');
+	}	
+/****************Group management ends here******************/
+
+
+/****************Report management start here******************/
+  public function admin_manage_reports(){
+	  Controller::loadModel('Report');
+		$cond = array();
+	    $this->paginate = array(
+	    	     'conditions'=>$cond,
+	    	     'limit'=>PAGINATION, 
+	    	     'order'=>array('Report.id'=>'DESC'),
+	    	     'contain'=>array(
+                   'Station'=>array('fields'=>array('id','name'))
+	    	     )
+	    	     );
+
+		$this->set('agencyListing', $this->paginate('Report'));
+	}
+	public function admin_add_report() {
+		Controller::loadModel('Agency');
+		Controller::loadModel('Report');
+		Controller::loadModel('User');
+        Controller::loadModel('Station');
+	 	$this->User->virtualFields = array(
+		'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+		);		       
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
+		$agencyies=$this->Agency->find('list',array('fields'=>array('id','name')));
+        $this->set('agencyies',$agencyies);
+        $result = $this->User->associations();
+        $users=$this->Station->find('all',array(
+        	                    'fields'=>array('id','name'),
+        	                    'contain'=>array(
+        	                    	'User'=>array('fields'=>array('id','name'))
+        	                    )
+        	                   )
+                            );
+ 
+        $this->set('firefiters',$users);
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+            $saveData['Report']['agency_id']=implode(',', $saveData['Report']['agency_id']);
+            $saveData['Report']['user_id']=implode(',', $saveData['Report']['user_id']);
+            //pr($saveData);die;
+			if($this->Report->save($saveData['Report'])){
+				$this->Session->setFlash('Report Added Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_reports/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+	}
+
+
+	public function admin_edit_report($id){
+		Controller::loadModel('Agency');
+		Controller::loadModel('Report');
+		Controller::loadModel('User');
+        Controller::loadModel('Station');
+	 	$this->User->virtualFields = array(
+		'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+		);		       
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
+		$agencyies=$this->Agency->find('list',array('fields'=>array('id','name')));
+        $this->set('agencyies',$agencyies);
+        $result = $this->User->associations();
+        $users=$this->Station->find('all',array(
+        	                    'fields'=>array('id','name'),
+        	                    'contain'=>array(
+        	                    	'User'=>array('fields'=>array('id','name'))
+        	                    )
+        	                   )
+                            );
+ 
+        $this->set('firefiters',$users);
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+            $saveData['Report']['agency_id']=implode(',', $saveData['Report']['agency_id']);
+            $saveData['Report']['user_id']=implode(',', $saveData['Report']['user_id']);			
+			if($this->Report->save($saveData['Report'])){
+				$this->Session->setFlash('Report Updated Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_reports/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+		}
+		$eventArr = $this->Report->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else{
+		    $this->redirect('/admin/admins/manage_reports/');
+		}
+			
+	}
+
+
+    public function admin_report_preview($id){
+	Controller::loadModel('Report');
+	Controller::loadModel('User');
+	Controller::loadModel('Agency');	
+ 	$this->User->virtualFields = array(
+	'name' => "CONCAT(User.first_name, ' ', User.last_name)"
+	);		
+    $eventArr = $this->Report->find('first',array(
+    	                                        'conditions'=>array('Report.id'=>$id),
+    	                                        'contain'=>array(
+    	                                        	'Station'=>array('fields'=>array('id','name')),
+    	                                         )
+    	                                        )
+                                        );
+
+	// Let's remove the hasMany...
+	$this->User->unbindModel(
+	    array('belongsTo' => array('Station'))
+	);    
+    $userData=$this->User->find('all',array(
+              'conditions'=>array('User.id'=>explode(',',$eventArr['Report']['user_id'])),
+              'fields'=>array('id','name'),
+              'recursive'=>0
+    	 ));
+    $agencyData=$this->Agency->find('all',array(
+              'conditions'=>array('Agency.id'=>explode(',',$eventArr['Report']['agency_id'])),
+              'fields'=>array('id','name'),
+              'recursive'=>0
+    	 ));
+
+     $userArr = array();
+     $agencyArr = array();
+     if(!empty($userData)){
+       foreach ($userData as $key => $value) {
+         $userArr[$key]=$value['User']['name'];
+       }
+       $eventArr['Report']['users']=implode(',',$userArr);
+     }
+     if(!empty($agencyData)){
+       foreach ($agencyData as $key1 => $value1) {
+         $agencyArr[$key1]=$value1['Agency']['name'];
+       }
+       $eventArr['Report']['agency']=implode(',',$agencyArr);       
+     }
+
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else{
+		   $this->redirect('/admin/admins/manage_reports/');	
+		}
+			
+	}
+		
+
+	public function admin_delete_report($id){
+		Controller::loadModel('Report');
+		if($id != ''){
+			$eventDetailsArr = $this->Report->findById($id);
+			if(!empty($eventDetailsArr)){ //pr($productDetailsArr);die;
+				
+				if($this->Report->delete($id))
+					$this->Session->setFlash('Report Deleted Successfully!!', 'message', array('class'=>'msg_success'));
+				else
+					$this->Session->setFlash('Please Try Later!!', 'message', array('class'=>'msg_error'));
+			}else
+				$this->Session->setFlash('No Associated Product Found!!', 'message', array('class'=>'msg_error'));
+		}
+		$this->redirect('/admin/admins/manage_reports/');
+	}	
+/****************Report management ends here******************/
+
+
+/****************Agency management start here******************/
+  public function admin_manage_agencies(){
+	  Controller::loadModel('Agency');
+		$cond = array();
+	    $this->paginate = array('conditions'=>$cond,'limit'=>PAGINATION, 'order'=>array('Agency.id'=>'DESC'));
+
+		$this->set('agencyListing', $this->paginate('Agency'));
+	}
+	public function admin_add_agency() {
+		Controller::loadModel('Agency');
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+
+			if($this->Agency->save($saveData['Agency'])){
+				$this->Session->setFlash('Agency Added Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_agencies/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+	}
+
+
+	public function admin_edit_agency($id){
+		Controller::loadModel('Agency');
+
+		if(!empty($this->request->data)){
+			$saveData = $this->request->data;
+			if($this->Agency->save($saveData['Agency'])){
+				$this->Session->setFlash('Agency Updated Successfully!!', 'message', array('class'=>'alert alert success'));
+				$this->redirect('/admin/admins/manage_agencies/');
+			}else
+				$this->Session->setFlash('Error! Please Correct Following Errors!', 'message', array('class'=>'msg_error'));
+			/*---------- ALIAS NAME END -------------*/
+		}
+		$eventArr = $this->Agency->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else{
+		    $this->redirect('/admin/admins/manage_agencies/');
+		}
+			
+	}
+
+
+    public function admin_agency_preview($id){
+	Controller::loadModel('Agency');
+    $eventArr = $this->Agency->findById($id);
+	if(!empty($eventArr)){
+			$this->data = $eventArr;
+		}else{
+		   $this->redirect('/admin/admins/manage_agencies/');	
+		}
+			
+	}
+		
+
+	public function admin_delete_agency($id){
+		Controller::loadModel('Agency');
+		if($id != ''){
+			$eventDetailsArr = $this->Agency->findById($id);
+			if(!empty($eventDetailsArr)){ //pr($productDetailsArr);die;
+				
+				if($this->Agency->delete($id))
+					$this->Session->setFlash('Agency Deleted Successfully!!', 'message', array('class'=>'msg_success'));
+				else
+					$this->Session->setFlash('Please Try Later!!', 'message', array('class'=>'msg_error'));
+			}else
+				$this->Session->setFlash('No Associated Product Found!!', 'message', array('class'=>'msg_error'));
+		}
+		$this->redirect('/admin/admins/manage_agencies/');
+	}	
+/****************Agency management ends here******************/
+
 /*------------- SETTING SECTION START SECTION END  ---------------------------*/
   
   
@@ -533,6 +958,10 @@ class AdminsController extends AppController{
 	
 	public function admin_add_user() {
 		Controller::loadModel('User');
+        Controller::loadModel('Station');
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
 		if(!empty($this->request->data)){
 			$saveData = $this->request->data;
 			if($this->request->data['User']['image']['name'] != ''){
@@ -596,6 +1025,10 @@ class AdminsController extends AppController{
 	
 		public function admin_edit_user($id){
 		Controller::loadModel('User');
+        Controller::loadModel('Station');
+		$stations=$this->Station->find('list',array('fields'=>array('id','name')));
+        $this->set('stations',$stations);
+
 		if(!empty($this->request->data)){ //pr($this->request->data);die;
 			$saveData['id'] = $this->request->data['User']['id'];
 			$saveData = $this->request->data;
