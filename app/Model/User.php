@@ -15,8 +15,12 @@ class User extends AppModel {
  * @var string
  */
 	public $displayField = 'id';
-
-
+    public $belongsTo = array(
+        'Station' => array(
+            'className' => 'Station',
+            'foreignKey' => 'station_id'
+        )
+    );
 
 /**
  * belongsTo associations
